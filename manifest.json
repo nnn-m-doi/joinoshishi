@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Kinnoshin",
-  "version": "1.0",
+  "version": "2019.8.19.1519",
   "description": "Let Kinnosuke improve, extend, advance.",
   "content_scripts": [
     {
