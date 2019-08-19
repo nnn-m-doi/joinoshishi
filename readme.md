@@ -4,10 +4,8 @@
 
 # Google Chromeにおけるインストール方法
 
-```
-1. crxファイル(このChrome拡張ファイル)をダウンロードする。
+1. [kinnoshin.crx](https://github.com/ohataken/kinnoshin/releases/latest)からダウンロードする。
 2. Google Chromeのメニュー「ウィンドウ」->「拡張機能」をクリックする
 3. 表示された画面の右上の「デベロッパーモード」をクリックして有効(右側)にする
-4. ダウンロードしたcrxファイルを、Finderから「拡張機能」画面にドラッグ&ドロップする
+4. ダウンロードしたkinnoshin.crxを、Finderから「拡張機能」画面にドラッグ&ドロップする
 5. 「Kinnoshinを追加しますか？」と問われるので、「拡張機能を追加」と答える
-```
