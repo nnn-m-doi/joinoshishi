@@ -4,9 +4,7 @@
   }
 
   function isAttendancePage() {
-    const target = 'tms.kinnosuke.jp/app/attendance';
-    const current = document.URL;
-    return 0 <= current.indexOf(target);
+    return isSubstring(document.URL, 'tms.kinnosuke.jp/app/attendance');
   }
 
   function zerofill(number, digit) {
