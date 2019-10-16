@@ -1,4 +1,8 @@
 (function () {
+  function isSubstring(longer, shorter) {
+    return 0 <= longer.indexOf(shorter);
+  }
+
   function isAttendancePage() {
     const target = 'tms.kinnosuke.jp/app/attendance';
     const current = document.URL;
