@@ -39,7 +39,7 @@
     }).then((minutes) => {
       const innerHTML = '今月の過不足時間' + toHourAndMinutesString(minutes);
       const fr = document.querySelector('.footer_right');
-      const el = fr.querySelector('.overtime');
+      const el = fr && fr.querySelector('.overtime');
 
       if (el) {
         el.innerHTML = innerHTML;
