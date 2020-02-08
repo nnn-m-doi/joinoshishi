@@ -52,7 +52,7 @@
     });
   }
 
-  if (isAttendancePage()) {
+  if (isSubstring(document.URL, 'tms.kinnosuke.jp/app/attendance')) {
     setInterval(displayOvertimes, 500);
   }
 
