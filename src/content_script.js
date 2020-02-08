@@ -3,10 +3,6 @@
     return 0 <= longer.indexOf(shorter);
   }
 
-  function isAttendancePage() {
-    return isSubstring(document.URL, 'tms.kinnosuke.jp/app/attendance');
-  }
-
   function zerofill(number, digit) {
     return ('0' + number).slice(digit * -1);
   }
