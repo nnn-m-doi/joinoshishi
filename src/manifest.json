@@ -3,6 +3,9 @@
   "name": "Kinnoshin",
   "version": "2020.2.4.1028",
   "description": "Let Kinnosuke improve, extend, advance.",
+  "icons": {
+    "128": "logo_0128_128.png"
+  },
   "content_scripts": [
     {
       "matches": [
