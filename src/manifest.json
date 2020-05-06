@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Kinnoshin",
   "short_name": "Kinnoshin",
-  "version": "2020.3.1.2014",
+  "version": "2020.5.6.1550",
   "description": "Let Kinnosuke improve, extend, advance.",
   "icons": {
     "128": "logo_0128_128.png"
