@@ -28,18 +28,26 @@
 
   async function displayOvertimes() {
     return Promise.resolve().then(() => {
-      const tds = document.querySelectorAll('table#attendance_list > tbody > tr > td:nth-child(6)');
-      return tds ? Promise.resolve(tds) : Promise.reject();
-    }).then((tds) => {
-      const minutes = Array.prototype.reduce.call(tds, (sum, el) => {
-        const r = /(\d\d):(\d\d)/.exec(el.innerHTML);
-        const h = r ? parseInt(r[1]) : 8;
-        const m = r ? parseInt(r[2]) : 0;
+      const isManager = document.querySelectorAll('table#attendance_list > thead > tr > th').length === 10;
+      const trs = document.querySelectorAll('table#attendance_list > tbody > tr');
 
-        return sum + h * 60 + m - 8 * 60;
+      const minutes = Array.prototype.reduce.call(trs, (sum, tr, index) => {
+        const tdStartAt = tr.querySelector(`td:nth-child(${isManager ? 4 : 3})`);
+        const tdEndAt = tr.querySelector(`td:nth-child(${isManager ? 5 : 4})`);
+        const tdBreakTime = tr.querySelector(`td:nth-child(${isManager ? 6 : 5})`);
+
+        const startAt = toMinutesFromString(tdStartAt.innerHTML);
+        const endAt = toMinutesFromString(tdEndAt.innerHTML);
+        const breakTime = toMinutesFromString(tdBreakTime.innerHTML);
+
+        if (startAt !== 0 && endAt !== 0 && breakTime !== 0 && startAt < endAt) {
+          return sum + endAt - startAt - breakTime - 8 * 60;
+        } else {
+          return sum;
+        }
       }, 0);
 
-      return Promise.resolve(minutes);
+      return trs ? Promise.resolve(minutes) : Promise.reject();
     }).then((minutes) => {
       const innerHTML = '今月の過不足時間' + toHourAndMinutesString(minutes);
       const fr = document.querySelector('.footer_right');
