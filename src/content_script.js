@@ -18,6 +18,14 @@
     return tmp;
   }
 
+  function toMinutesFromString(string) {
+    const r = /(\d\d):(\d\d)/.exec(string);
+    const h = r ? parseInt(r[1]) : 0;
+    const m = r ? parseInt(r[2]) : 0;
+
+    return h * 60 + m;
+  }
+
   async function displayOvertimes() {
     return Promise.resolve().then(() => {
       const tds = document.querySelectorAll('table#attendance_list > tbody > tr > td:nth-child(6)');
