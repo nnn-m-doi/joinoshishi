@@ -36,13 +36,25 @@
 
   async function displayOvertimes() {
     return Promise.resolve().then(() => {
-      const isManager = document.querySelectorAll('table#attendance_list > thead > tr > th').length === 10;
+      const ths = document.querySelectorAll('table#attendance_list > thead > tr > th');
       const trs = document.querySelectorAll('table#attendance_list > tbody > tr');
 
+      const tdStartAtIndex = findElementIndex(ths, (el, i) => {
+        return isSubstring(el.innerHTML, "出勤時刻");
+      });
+
+      const tdEndAtIndex = findElementIndex(ths, (el, i) => {
+        return isSubstring(el.innerHTML, "退勤時刻");
+      });
+
+      const tdBreakTimeAtIndex = findElementIndex(ths, (el, i) => {
+        return isSubstring(el.innerHTML, "所定休憩時間");
+      });
+
       const minutes = Array.prototype.reduce.call(trs, (sum, tr, index) => {
-        const tdStartAt = tr.querySelector(`td:nth-child(${isManager ? 4 : 3})`);
-        const tdEndAt = tr.querySelector(`td:nth-child(${isManager ? 5 : 4})`);
-        const tdBreakTime = tr.querySelector(`td:nth-child(${isManager ? 6 : 5})`);
+        const tdStartAt = tr.children[tdStartAtIndex];
+        const tdEndAt = tr.children[tdEndAtIndex];
+        const tdBreakTime = tr.children[tdBreakTimeAtIndex];
 
         const startAt = toMinutesFromString(tdStartAt.innerHTML);
         const endAt = toMinutesFromString(tdEndAt.innerHTML);
