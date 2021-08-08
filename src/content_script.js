@@ -26,6 +26,14 @@
     return h * 60 + m;
   }
 
+  function findElementIndex(array, callback) {
+    for (let i = 0; i < array.length; ++i) {
+      if (callback(array[i], i, array)) {
+        return i;
+      }
+    }
+  }
+
   async function displayOvertimes() {
     return Promise.resolve().then(() => {
       const isManager = document.querySelectorAll('table#attendance_list > thead > tr > th').length === 10;
