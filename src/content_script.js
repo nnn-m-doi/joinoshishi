@@ -1,91 +1,62 @@
-(function () {
-  function isSubstring(longer, shorter) {
-    return 0 <= longer.indexOf(shorter);
-  }
 
-  function zerofill(number, digit) {
-    return ('0' + number).slice(digit * -1);
-  }
 
-  function toHourAndMinutesString(minutes) {
-    var tmp = '';
+function isSubstring(longer, shorter) {
+  return 0 <= longer.indexOf(shorter);
+}
 
-    tmp += minutes < 0 ? '-' : '';
-    tmp += zerofill(Math.floor(Math.abs(minutes / 60)), 2);
-    tmp += ':';
-    tmp += zerofill(Math.floor(Math.abs(minutes % 60)), 2);
+function zerofill(number, digit) {
+  return ('0' + number).slice(digit * -1);
+}
 
-    return tmp;
-  }
+function toHourAndMinutesString(minutes) {
+  var tmp = '';
 
-  function toMinutesFromString(string) {
-    const r = /(\d\d):(\d\d)/.exec(string);
-    const h = r ? parseInt(r[1]) : 0;
-    const m = r ? parseInt(r[2]) : 0;
+  tmp += minutes < 0 ? '-' : '';
+  tmp += zerofill(Math.floor(Math.abs(minutes / 60)), 2);
+  tmp += ':';
+  tmp += zerofill(Math.floor(Math.abs(minutes % 60)), 2);
 
-    return h * 60 + m;
-  }
+  return tmp;
+}
 
-  function findElementIndex(array, callback) {
-    for (let i = 0; i < array.length; ++i) {
-      if (callback(array[i], i, array)) {
-        return i;
-      }
-    }
-  }
+function toMinutesFromString(string) {
+  const r = /(\d\d):(\d\d)/.exec(string);
+  const h = r ? parseInt(r[1]) : 0;
+  const m = r ? parseInt(r[2]) : 0;
 
-  async function displayOvertimes() {
-    return Promise.resolve().then(() => {
-      const ths = document.querySelectorAll('table#attendance_list > thead > tr > th');
-      const trs = document.querySelectorAll('table#attendance_list > tbody > tr');
+  return h * 60 + m;
+}
 
-      const tdStartAtIndex = findElementIndex(ths, (el, i) => {
-        return isSubstring(el.innerHTML, "出勤時刻");
-      });
+function displayOverTimes() {
+  const totalWorkMinutes = document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[1].innerText * 8 * 60;
+  const totalWorkMinutesIncludeToday = document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[0].innerText * 8 * 60;
+  const totalWorkTime = toMinutesFromString(document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[3].innerText);
 
-      const tdEndAtIndex = findElementIndex(ths, (el, i) => {
-        return isSubstring(el.innerHTML, "退勤時刻");
-      });
+  const overMinutes = totalWorkTime - totalWorkMinutes;
 
-      const tdBreakTimeAtIndex = findElementIndex(ths, (el, i) => {
-        return isSubstring(el.innerHTML, "所定休憩時間");
-      });
+  const overMinutesIncludeToday =  totalWorkMinutesIncludeToday - totalWorkTime;
 
-      const minutes = Array.prototype.reduce.call(trs, (sum, tr, index) => {
-        const tdStartAt = tr.children[tdStartAtIndex];
-        const tdEndAt = tr.children[tdEndAtIndex];
-        const tdBreakTime = tr.children[tdBreakTimeAtIndex];
+  const showOver = toHourAndMinutesString(overMinutes);
 
-        const startAt = toMinutesFromString(tdStartAt.innerHTML);
-        const endAt = toMinutesFromString(tdEndAt.innerHTML);
-        const breakTime = toMinutesFromString(tdBreakTime.innerHTML);
+  const showOverToday =  toHourAndMinutesString(overMinutesIncludeToday);
 
-        if (startAt !== 0 && endAt !== 0 && breakTime !== 0 && startAt < endAt) {
-          return sum + endAt - startAt - breakTime - 8 * 60;
-        } else {
-          return sum;
-        }
-      }, 0);
+  const appendHeader = document.createElement("th");
+  appendHeader.textContent = "今月の過不足時間";
+  appendHeader.style.cssText = "color: #FFDDDD";
+  const appendElement = document.createElement("td");
+  appendElement.textContent = showOver;
 
-      return trs ? Promise.resolve(minutes) : Promise.reject();
-    }).then((minutes) => {
-      const innerHTML = '今月の過不足時間' + toHourAndMinutesString(minutes);
-      const fr = document.querySelector('.footer_right');
-      const el = fr && fr.querySelector('.overtime');
+  const appendHeader2 = document.createElement("th");
+  appendHeader2.textContent = "今日の最短労働時間";
+  appendHeader2.style.cssText = "color: #FFDDDD";
+  const appendElement2 = document.createElement("td");
+  appendElement2.textContent = showOverToday;
 
-      if (el) {
-        el.innerHTML = innerHTML;
-      } else {
-        const span = document.createElement('span');
-        span.innerHTML = innerHTML;
-        span.classList.add('overtime');
-        fr.appendChild(span);
-      }
-    });
-  }
+  document.querySelectorAll("div#getuji_scroll > div > table > thead > tr > th")[3].after(appendHeader2);
+  document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[3].after(appendElement2);
 
-  if (isSubstring(document.URL, 'tms.kinnosuke.jp/app/attendance')) {
-    setInterval(displayOvertimes, 500);
-  }
+  document.querySelectorAll("div#getuji_scroll > div > table > thead > tr > th")[3].after(appendHeader);
+  document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[3].after(appendElement);
+}
 
-})();
+window.onload = displayOverTimes();

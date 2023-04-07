@@ -1,16 +1,13 @@
 {
-  "manifest_version": 2,
-  "name": "Kinnoshin",
-  "short_name": "Kinnoshin",
-  "version": "2021.8.8.1548",
-  "description": "Let Kinnosuke improve, extend, advance.",
-  "icons": {
-    "128": "logo_0128_128.png"
-  },
+  "manifest_version": 3,
+  "name": "上位の獅子",
+  "short_name": "上位の獅子",
+  "version": "0.0.1",
+  "description": "勤労の獅子を使いやすくする",
   "content_scripts": [
     {
       "matches": [
-        "*://tms.kinnosuke.jp/*"
+        "*://kinrou.hr44.jp/kinrou/kojin/kojinbetuSyoukai/*"
       ],
       "js": [
         "content_script.js"
