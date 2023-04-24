@@ -20,7 +20,7 @@ function toHourAndMinutesString(minutes) {
 }
 
 function toMinutesFromString(string) {
-  const r = /(\d\d):(\d\d)/.exec(string);
+  const r = /(\d{2,3}):(\d\d)/.exec(string);
   const h = r ? parseInt(r[1]) : 0;
   const m = r ? parseInt(r[2]) : 0;
 
