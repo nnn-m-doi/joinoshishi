@@ -30,7 +30,7 @@ function toMinutesFromString(string) {
 function displayOverTimes() {
   const totalWorkMinutes = document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[1].innerText * 8 * 60;
   const totalWorkMinutesIncludeToday = totalWorkMinutes + 480;
-  const totalWorkTime = toMinutesFromString(document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[8].innerText);
+  const totalWorkTime = toMinutesFromString(document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[2].innerText);
 
   const overMinutes = totalWorkTime - totalWorkMinutes;
 
