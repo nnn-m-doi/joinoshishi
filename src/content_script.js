@@ -30,7 +30,7 @@ function toMinutesFromString(string) {
 function displayOverTimes() {
   const totalWorkMinutes = document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[1].innerText * 8 * 60;
   const totalWorkMinutesIncludeToday = totalWorkMinutes + 480;
-  const totalWorkTime = toMinutesFromString(document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[3].innerText);
+  const totalWorkTime = toMinutesFromString(document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[8].innerText);
 
   const overMinutes = totalWorkTime - totalWorkMinutes;
 
@@ -52,11 +52,11 @@ function displayOverTimes() {
   const appendElement2 = document.createElement("td");
   appendElement2.textContent = showOverToday;
 
-  document.querySelectorAll("div#getuji_scroll > div > table > thead > tr > th")[3].after(appendHeader2);
-  document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[3].after(appendElement2);
+  document.querySelectorAll("div#getuji_scroll > div > table > thead > tr > th")[2].after(appendHeader2);
+  document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[2].after(appendElement2);
 
-  document.querySelectorAll("div#getuji_scroll > div > table > thead > tr > th")[3].after(appendHeader);
-  document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[3].after(appendElement);
+  document.querySelectorAll("div#getuji_scroll > div > table > thead > tr > th")[2].after(appendHeader);
+  document.querySelectorAll("div#getuji_scroll > div > table > tbody > tr > td")[2].after(appendElement);
 }
 
 window.onload = displayOverTimes();
